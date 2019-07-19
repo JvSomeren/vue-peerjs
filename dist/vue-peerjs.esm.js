@@ -1,0 +1,1 @@
+var e=function(e){return"function"==typeof e};export default{install:function(t,r,n){if(!((o=r)&&e(o.on)&&e(o.call)))throw new Error("[vue-peerjs] you have to pass a `Peer` instance to the plugin");var o;t.prototype.$peer=r},defaults:Object.freeze({actionPrefix:"peer_",mutationPrefix:"PEER_"})};

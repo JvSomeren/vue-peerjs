@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue-PeerJS Example</title>
+</head>
+<body>
+  <div id="app">
+    <h2 v-if="!browserSupported">You're browser does not support webRTC please use a modern browser.</h2>
+
+    <div>
+      <input type="text" v-model="peerId">
+      <button @click="connect">Connect to peer</button>
+      <span>{{ ownId }}</span>
+    </div>
+
+    <div>
+      <div
+        v-for="(connection, index) in connections"
+        :key="index">
+        <span>{{ connection.connectionId }}</span>
+        <button
+          @click="poke(connection)">Poke!</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.0.0/peerjs.min.js"></script>
+  <script src="../dist/vue-peerjs.min.js"></script>
+  <script>
+    Vue.use(VuePeerJS, new Peer({}));
+
+    let vm = new Vue({
+      el: '#app',
+      data: {
+        browserSupported: true,
+        loading: true,
+        ownId: 'loading',
+        peerId: '',
+        msg: 'welcome',
+        connections: [],
+      },
+      computed: {},
+      methods: {
+        setListeners: function(conn) {
+          conn.on('data', (data) => {
+            console.log(data);
+          });
+
+          conn.on('close', () => {
+            this.connections = this.connections.filter(connection => connection.connectionId !== conn.connectionId);
+          });
+
+          conn.on('error', (err) => {
+            console.error(err);
+          });
+        },
+
+        connect: function() {
+          const conn = this.$peer.connect(this.peerId, {
+            label: 'user',
+            metadata: {
+              name: 'userName'
+            },
+            serialization: 'json',
+          });
+
+          conn.on('open', () => {
+            conn.send('hi!');
+            this.connections.push(conn);
+            this.setListeners(conn);
+          });
+        },
+
+        poke: function(conn) {
+          conn.send('poke!');
+        },
+      },
+      created() {
+        this.$peer.on('open', (id) => {
+          this.loading = false;
+          this.ownId = id;
+        });
+
+        this.$peer.on('connection', (conn) => {
+          this.connections.push(conn);
+          this.setListeners(conn);
+        });
+
+        this.$peer.on('close', () => {
+          console.log('close');
+        });
+
+        this.$peer.on('disconnected', () => {
+          console.log('dis');
+        });
+      },
+      mounted() {
+      }
+    });
+  </script>
+</body>
+</html>
