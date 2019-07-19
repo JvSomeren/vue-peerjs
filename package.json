@@ -1,0 +1,59 @@
+{
+  "name": "vue-peerjs",
+  "version": "0.1.0",
+  "description": "PeerJS bindings for Vue.js and Vuex",
+  "main": "dist/vue-peerjs.min.js",
+  "module": "dist/vue-peerjs.esm.js",
+  "scripts": {
+    "lint": "eslint scripts src",
+    "release": "bash scripts/release.sh",
+    "build": "rollup -c scripts/rollup-build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "files": [
+    "dist/",
+    "types/index.d.ts",
+    "types/vue.d.ts"
+  ],
+  "types": "types/index.d.ts",
+  "keywords": [
+    "vuejs",
+    "vue",
+    "peerjs",
+    "peerjs-client",
+    "p2p",
+    "webrtc",
+    "realtime",
+    "vuex"
+  ],
+  "author": "Joost van Someren <joost.v.someren@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "@types/peerjs": "^0.0.30"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
+    "@babel/preset-env": "^7.4.3",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.1",
+    "rollup": "^1.10.0",
+    "rollup-plugin-babel": "^4.3.2",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-filesize": "^6.0.1",
+    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-terser": "^4.0.4",
+    "vue": "^2.6.10",
+    "vuex": "^3.1.0"
+  }
+}
