@@ -1,5 +1,5 @@
 import {PluginFunction} from 'vue';
-import * as PeerJS from './peerjs';
+import Peer from './peerjs';
 // augment typings of Vue.js
 import './vue';
 
@@ -9,7 +9,7 @@ export interface PeerToVuexOptions {
 }
 
 export interface VuePeerJSOptions extends PeerToVuexOptions {
-  peer: PeerJS;
+  peer: Peer;
 }
 
 declare class VuePeerJS {
