@@ -1,6 +1,6 @@
 {
   "name": "vue-peerjs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "PeerJS bindings for Vue.js and Vuex",
   "main": "dist/vue-peerjs.min.js",
   "module": "dist/vue-peerjs.esm.js",
