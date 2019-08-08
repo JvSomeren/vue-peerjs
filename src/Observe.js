@@ -7,13 +7,13 @@ export default (Peer, { store, ...otherOptions } = {}) => {
   const options = { ...defaults, ...otherOptions };
 
   const augmentPeerConnect = (handlerFn) => {
-    Object.defineProperty(Peer, 'oldConnect', {
+    Object.defineProperty(Peer, 'peerConnect', {
       value: Peer.connect,
       writable: true,
     });
     // eslint-disable-next-line no-param-reassign
     Peer.connect = (id, opts = {}) => {
-      const dataConnection = Peer.oldConnect(id, opts);
+      const dataConnection = Peer.peerConnect(id, opts);
 
       handlerFn(dataConnection);
 
@@ -22,13 +22,13 @@ export default (Peer, { store, ...otherOptions } = {}) => {
   };
 
   const augmentPeerCall = (handlerFn) => {
-    Object.defineProperty(Peer, 'oldCall', {
+    Object.defineProperty(Peer, 'peerCall', {
       value: Peer.call,
       writable: true,
     });
     // eslint-disable-next-line no-param-reassign
     Peer.call = (id, stream, opts = {}) => {
-      const mediaConnection = Peer.oldCall(id, stream, opts);
+      const mediaConnection = Peer.peerCall(id, stream, opts);
 
       handlerFn(mediaConnection);
 
