@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/JvSomeren/vue-peerjs"
   },
   "files": [
     "dist/",
@@ -33,9 +33,9 @@
   "author": "Joost van Someren <joost.v.someren@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/JvSomeren/vue-peerjs/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/JvSomeren/vue-peerjs#readme",
   "dependencies": {
     "camelcase": "^5.3.1"
   },
