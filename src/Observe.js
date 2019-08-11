@@ -36,21 +36,21 @@ export default (Peer, { store, ...otherOptions } = {}) => {
     };
   };
 
-  const eventToAction = pipe(
-    options.eventToActionTransformer,
-    prefixWith(options.actionPrefix),
-  );
-
-  const eventToMutation = pipe(
+  const eventToMutation = prefix => pipe(
     options.eventToMutationTransformer,
-    prefixWith(options.mutationPrefix),
+    prefixWith(prefix.mutation),
   );
 
-  function passToStore(event, payload) {
+  const eventToAction = prefix => pipe(
+    options.eventToActionTransformer,
+    prefixWith(prefix.action),
+  );
+
+  function passToStore(event, payload, prefix = options.peerPrefix) {
     if (!store) return;
 
-    const desiredMutation = eventToMutation(event);
-    const desiredAction = eventToAction(event);
+    const desiredMutation = eventToMutation(prefix)(event);
+    const desiredAction = eventToAction(prefix)(event);
     const mutations = getRegisteredMutations(store);
     const actions = getRegisteredActions(store);
     const unwrappedPayload = unwrapIfSingle(payload);
@@ -67,7 +67,7 @@ export default (Peer, { store, ...otherOptions } = {}) => {
   const registerDataConnectionEventHandler = (dataConnection) => {
     DATA_CONNECTION_EVENTS.forEach((eventName) => {
       dataConnection.on(eventName, (...args) => {
-        passToStore(eventName, { dataConnection, args });
+        passToStore(eventName, { dataConnection, args }, options.dataPrefix);
       });
     });
   };
@@ -75,7 +75,7 @@ export default (Peer, { store, ...otherOptions } = {}) => {
   const registerMediaConnectionEventHandler = (mediaConnection) => {
     MEDIA_CONNECTION_EVENTS.forEach((eventName) => {
       mediaConnection.on(eventName, (...args) => {
-        passToStore(eventName, { mediaConnection, args });
+        passToStore(eventName, { mediaConnection, args }, options.mediaPrefix);
       });
     });
   };
@@ -91,7 +91,7 @@ export default (Peer, { store, ...otherOptions } = {}) => {
 
     PEER_EVENTS.forEach((eventName) => {
       Peer.on(eventName, (...args) => {
-        passToStore(eventName, args);
+        passToStore(eventName, { args }, options.peerPrefix);
       });
     });
   };
