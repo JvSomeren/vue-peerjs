@@ -11,7 +11,7 @@ export default Object.freeze({
   },
   mediaPrefix: {
     action: 'media_',
-    mutation: 'MEDIA_'
+    mutation: 'MEDIA_',
   },
   eventToMutationTransformer: event => event.toUpperCase(),
   eventToActionTransformer: camelcase,
