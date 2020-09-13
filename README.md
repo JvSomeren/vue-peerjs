@@ -21,7 +21,7 @@ npm install vue-peerjs peerjs
 import VuePeerJS from 'vue-peerjs';
 import Peer from 'peerjs';
 
-Vue.use(VuePeerJS, new Peer({});
+Vue.use(VuePeerJS, new Peer({}));
 ```
 *Note:* you have to pass instance of `peerjs` as second argument to prevent library duplication.
 
